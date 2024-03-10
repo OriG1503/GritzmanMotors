@@ -10,12 +10,12 @@ namespace Model
     {
         private Pricing _priceCode;
         private Customer _customerCode;
-        private Employee _employeeCode;
+        private Employee? _employeeCode;
         private DateOnly _dateOfTreatment;
         private bool _carReady;
         private DateTime _dateOfOrder;
 
-        public Employee EmployeeCode { get => _employeeCode; set => _employeeCode = value; }
+        public Employee? EmployeeCode { get => _employeeCode; set => _employeeCode = value; }
         public DateOnly DateOfTreatment { get => _dateOfTreatment; set => _dateOfTreatment = value; }
         public bool CarReady { get => _carReady; set => _carReady = value; }
         public DateTime DateOfOrder { get => _dateOfOrder; set => _dateOfOrder = value; }

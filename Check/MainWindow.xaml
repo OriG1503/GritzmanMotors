@@ -1,0 +1,24 @@
+﻿<Window x:Class="Check.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Data Table Viewer" Height="400" Width="600">
+    <Grid>
+        <ListView Name="dataListView">
+            <!-- Define columns for your data -->
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Column 1" Width="120" DisplayMemberBinding="{Binding Id}" />
+                    <GridViewColumn Header="Column 2" Width="120" DisplayMemberBinding="{Binding DateOfTreatment}" />
+                    <GridViewColumn Header="Column 3" Width="120" DisplayMemberBinding="{Binding CarReady}" />
+                    <GridViewColumn Header="Column 4" Width="120" DisplayMemberBinding="{Binding DateOfOrder}" />
+                    <GridViewColumn Header="Column 5" Width="120" DisplayMemberBinding="{Binding PriceCode.Price}" />
+                    <GridViewColumn Header="Column 6" Width="120" DisplayMemberBinding="{Binding PriceCode.ModelCode.CarModelName}" />
+                    <GridViewColumn Header="Column 7" Width="120" DisplayMemberBinding="{Binding PriceCode.ModelCode.CompanyCode.CarCompanyName}" />
+                    <GridViewColumn Header="Employee Name" Width="120" DisplayMemberBinding="{Binding EmployeeCode.FirstName}" />
+                    <GridViewColumn Header="Customer Name" Width="120" DisplayMemberBinding="{Binding CustomerCode.FirstName}" />
+                    <!-- Add more columns as needed -->
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </Grid>
+</Window>
