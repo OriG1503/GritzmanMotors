@@ -20,6 +20,10 @@ namespace ViewModel
         #endregion
 
         #region New Entity
+        //הפעולה מחזירה איבר חדש מסוג
+        //Manager
+        //בתור ישות מסוג
+        //BaseEntity
         protected override BaseEntity NewEntity()
         {
             return new Manager() as BaseEntity;
@@ -27,6 +31,9 @@ namespace ViewModel
         #endregion
 
         #region Create Model
+        //הפעולה יוצרת עצם מסוג
+        //Manager
+        //מתוך תוצאת שאילתת השליפה/בחירה ממסד הנתונים
         protected override async Task<BaseEntity> CreateModel(BaseEntity entity)
         {
             Manager manager = entity as Manager;
@@ -39,15 +46,20 @@ namespace ViewModel
         #endregion
 
         #region Select All
+        //הפעולה שולפת את כל הרשומות מהטבלה
+        //שנמצאת במסד הנתונים ManagerTBL
         public async Task<ManagerList> SelectAll()
         {
-            command.CommandText = "SELECT PersonTBL.id, PersonTBL.firstName, PersonTBL.lastName, PersonTBL.dateOfBirth, ManagerTBL.roleCode FROM PersonTBL INNER JOIN ManagerTBL ON PersonTBL.id = ManagerTBL.id;";
+            command.CommandText = "SELECT PersonTBL.id, PersonTBL.firstName, PersonTBL.lastName, PersonTBL.dateOfBirth," +
+                "ManagerTBL.roleCode FROM PersonTBL INNER JOIN ManagerTBL ON PersonTBL.id = ManagerTBL.id;";
             list = new ManagerList(await base.Select());
             return list;
         }
         #endregion
 
         #region Select By Id
+        //הפעולה מבצעת שאילתת שליפה לרשומה מסוימת מהטבלה לפי ה
+        //id
         public async static Task<Manager> SelectById(int id)
         {
             if (list.Count == 0)
@@ -61,8 +73,8 @@ namespace ViewModel
         }
         #endregion
 
-        //אני חושב שיש טעויות בריג'יון שלמטה
         #region Create [Insert/Update/Delete] SQL
+        //שלושת הפעולות יוצרות את הפקודות המתאימות להוספה, עדכון ומחיקה של רשומות מהטבלה במסד הנתונים
         protected override void CreateInsertSQL(BaseEntity entity, OleDbCommand cmd)
         {
             Manager manager = entity as Manager;
@@ -93,6 +105,7 @@ namespace ViewModel
         #endregion
 
         #region Insert Update Delete - Functions
+        //שלושת הפעולות מוסיפות, מעדכנות ומוחקות רשומות מהטבלה במסד הנתונים
         public override void Insert(BaseEntity entity)
         {
             Manager reqEntity = entity as Manager;

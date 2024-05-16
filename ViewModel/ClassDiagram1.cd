@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="ViewModel.BaseDB" Collapsed="true">
+    <Position X="9.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAQAAEAAAAAAAAgACAABAAAAAlUAIAAAAAAAQEBSAAA=</HashCode>
+      <FileName>BaseDB.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ViewModel.CarCompanyDB" Collapsed="true">
+    <Position X="7.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAkAAACAAAAAAAAAAAAAAAkEAIAAAAAAAAABCAAA=</HashCode>
+      <FileName>CarCompanyDB.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ViewModel.CarModelDB" Collapsed="true">
+    <Position X="9.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAkAAACAAAAAAAAAAAAAAAkEAIAAAAAAAAABCAAA=</HashCode>
+      <FileName>CarModelDB.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ViewModel.ChangeEntity" Collapsed="true">
+    <Position X="21" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAAAAQAAEAAAAAAAAAAAAAAAAAAAAEAAAAAA=</HashCode>
+      <FileName>ChangeEntity.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ViewModel.CustomerDB" Collapsed="true">
+    <Position X="11.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAkAAACAAAAAAAAAAAAAAAkEAIAAAAAAAAABCAAA=</HashCode>
+      <FileName>CustomerDB.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ViewModel.EmployeeDB" Collapsed="true">
+    <Position X="14" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAkAAACAAAAAAAAAAAAAAAkEAIAAAAAAAAABCAAA=</HashCode>
+      <FileName>EmployeeDB.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ViewModel.ManagerDB" Collapsed="true">
+    <Position X="16.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAkAAACAAAAAAAAAAAAAAAkEAIAAAAAAAAABCAAA=</HashCode>
+      <FileName>ManagerDB.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ViewModel.OrderDB" Collapsed="true">
+    <Position X="2.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAkAAACAAAAAAAAAAAAAAAkEAIAAAAAAAAABCAAA=</HashCode>
+      <FileName>OrderDB.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ViewModel.PersonDB" Collapsed="true">
+    <Position X="11.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAkAAACAAAAAAAAAAAAAAAkEAIAAAAAAAAABCAAA=</HashCode>
+      <FileName>PersonDB.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ViewModel.PricingDB" Collapsed="true">
+    <Position X="14" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAkAAACAAAAAAAAAAAAAAAkEAIAAAAAAAAABCAAA=</HashCode>
+      <FileName>PricingDB.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ViewModel.RoleDB" Collapsed="true">
+    <Position X="16.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAkAAACAAAAAAAAAAAAAAAkEAIAAAAAAAAABCAAA=</HashCode>
+      <FileName>RoleDB.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ViewModel.SpecializationDB" Collapsed="true">
+    <Position X="5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAkAAACAAAAAAAAAAAAAAAkEAIAAAAAAAAABCAAA=</HashCode>
+      <FileName>SpecializationDB.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Delegate Name="ViewModel.CreateSql" Collapsed="true">
+    <Position X="21" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAIAAAAAAAQAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ChangeEntity.cs</FileName>
+    </TypeIdentifier>
+  </Delegate>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

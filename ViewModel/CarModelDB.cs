@@ -19,6 +19,10 @@ namespace ViewModel
         #endregion
 
         #region New Entity
+        //הפעולה מחזירה איבר חדש מסוג
+        //CarModel
+        //בתור ישות מסוג
+        //BaseEntity
         protected override BaseEntity NewEntity()
         {
             return new CarModel() as BaseEntity;
@@ -26,6 +30,9 @@ namespace ViewModel
         #endregion
 
         #region Create Model
+        //הפעולה יוצרת עצם מסוג
+        //CarModel
+        //מתוך תוצאת שאילתת השליפה/בחירה ממסד הנתונים
         protected override async Task<BaseEntity> CreateModel(BaseEntity entity)
         {
             CarModel carModel = entity as CarModel;
@@ -40,6 +47,8 @@ namespace ViewModel
         #endregion
 
         #region Select All
+        //הפעולה שולפת את כל הרשומות מהטבלה
+        //שנמצאת במסד הנתונים CarModelTBL 
         public async Task<CarModelList> SelectAll()
         {
             command.CommandText = "SELECT * FROM CarModelTBL";
@@ -49,6 +58,8 @@ namespace ViewModel
         #endregion
 
         #region Select By Id
+        //הפעולה מבצעת שאילתת שליפה לרשומה מסוימת מהטבלה לפי ה
+        //id
         public async static Task<CarModel> SelectById(int id)
         {
             if (list.Count == 0)
@@ -63,6 +74,7 @@ namespace ViewModel
         #endregion
 
         #region Create [Insert/Update/Delete] SQL
+        //שלושת הפעולות יוצרות את הפקודות המתאימות להוספה, עדכון ומחיקה של רשומות מהטבלה במסד הנתונים
         protected override void CreateInsertSQL(BaseEntity entity, OleDbCommand cmd)
         {
             CarModel carModel = entity as CarModel;
@@ -93,6 +105,7 @@ namespace ViewModel
         #endregion
 
         #region Insert Update Delete - Functions
+        //שלושת הפעולות מוסיפות, מעדכנות ומוחקות רשומות מהטבלה במסד הנתונים
         public override void Insert(BaseEntity entity)
         {
             CarModel reqEntity = entity as CarModel;

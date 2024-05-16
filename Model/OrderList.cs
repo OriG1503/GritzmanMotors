@@ -13,6 +13,5 @@ namespace Model
         public OrderList(IEnumerable<Order> list) : base(list) { }
 
         public OrderList(IEnumerable<BaseEntity> list) : base(list.Cast<Order>().ToList()) { }
-
     }
 }

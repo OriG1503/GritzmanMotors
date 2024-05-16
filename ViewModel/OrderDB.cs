@@ -19,6 +19,10 @@ namespace ViewModel
         #endregion
 
         #region New Entity
+        //הפעולה מחזירה איבר חדש מסוג
+        //Order
+        //בתור ישות מסוג
+        //BaseEntity
         protected override BaseEntity NewEntity()
         {
             return new Order() as BaseEntity;
@@ -26,6 +30,9 @@ namespace ViewModel
         #endregion
 
         #region Create Model
+        //הפעולה יוצרת עצם מסוג
+        //Order
+        //מתוך תוצאת שאילתת השליפה/בחירה ממסד הנתונים
         protected override async Task<BaseEntity> CreateModel(BaseEntity entity)
         {
             Order order = entity as Order;
@@ -49,23 +56,20 @@ namespace ViewModel
         #endregion
 
         #region Select All
+        //הפעולה שולפת את כל הרשומות מהטבלה
+        //שנמצאת במסד הנתונים OrderTBL 
         public async Task<OrderList> SelectAll()
         {
-            command.CommandText = "SELECT OrderTBL.id, OrderTBL.priceCode, OrderTBL.customerCode, OrderTBL.employeeCode, OrderTBL.dateOfTreatment, OrderTBL.carReady, OrderTBL.dateOfOrder FROM OrderTBL;";
-
-            //command.CommandText = "SELECT OrderTBL.id, OrderTBL.dateOfTreatment, OrderTBL.carReady, OrderTBL.dateOfOrder, OrderTBL.priceCode, " +
-            //    "PricingTBL.price, PricingTBL.modelCode, CarModelTBL.companyCode FROM CarModelTBL INNER JOIN (PricingTBL INNER JOIN OrderTBL " +
-            //    "ON PricingTBL.id = OrderTBL.priceCode) ON CarModelTBL.id = PricingTBL.modelCode;";
-
-            //command.CommandText = "SELECT OrderTBL.id, OrderTBL.priceCode, OrderTBL.dateOfTreatment, OrderTBL.carReady, " +
-            //   "OrderTBL.dateOfOrder FROM OrderTBL;";
-
+            command.CommandText = "SELECT OrderTBL.id, OrderTBL.priceCode, OrderTBL.customerCode, " +
+                "OrderTBL.employeeCode, OrderTBL.dateOfTreatment, OrderTBL.carReady, OrderTBL.dateOfOrder FROM OrderTBL;";
             list = new OrderList(await Select());
             return list;
         }
         #endregion
 
         #region Select By Id
+        //הפעולה מבצעת שאילתת שליפה לרשומה מסוימת מהטבלה לפי ה
+        //id
         public async static Task<Order> SelectById(int id)
         {
             if (list.Count == 0)
@@ -80,6 +84,7 @@ namespace ViewModel
         #endregion
 
         #region Create [Insert/Update/Delete] SQL
+        //שלושת הפעולות יוצרות את הפקודות המתאימות להוספה, עדכון ומחיקה של רשומות מהטבלה במסד הנתונים
         protected override void CreateInsertSQL(BaseEntity entity, OleDbCommand cmd)
         {
             Order order = entity as Order;
@@ -88,7 +93,8 @@ namespace ViewModel
             {
                 if (order.EmployeeCode?.Id != null)
                 {
-                    cmd.CommandText = "INSERT INTO OrderTBL (priceCode, customerCode, employeeCode, dateOfTreatment, carReady, dateOfOrder) VALUES (@PriceCode, @CustomerCode, @EmployeeCode, @DateOfTreatment, @CarReady, @DateOfOrder)";
+                    cmd.CommandText = "INSERT INTO OrderTBL (priceCode, customerCode, employeeCode, dateOfTreatment, carReady, dateOfOrder)" +
+                        " VALUES (@PriceCode, @CustomerCode, @EmployeeCode, @DateOfTreatment, @CarReady, @DateOfOrder)";
                     cmd.Parameters.Add(new OleDbParameter("@PriceCode", order.PriceCode.Id));
                     cmd.Parameters.Add(new OleDbParameter("@CustomerCode", order.CustomerCode.Id));
                     cmd.Parameters.Add(new OleDbParameter("@EmployeeCode", order.EmployeeCode?.Id));
@@ -98,7 +104,8 @@ namespace ViewModel
                 }
                 else
                 {
-                    cmd.CommandText = "INSERT INTO OrderTBL (priceCode, customerCode, dateOfTreatment, carReady, dateOfOrder) VALUES (@PriceCode, @CustomerCode, @DateOfTreatment, @CarReady, @DateOfOrder)";
+                    cmd.CommandText = "INSERT INTO OrderTBL (priceCode, customerCode, dateOfTreatment, carReady, dateOfOrder) " +
+                        "VALUES (@PriceCode, @CustomerCode, @DateOfTreatment, @CarReady, @DateOfOrder)";
                     cmd.Parameters.Add(new OleDbParameter("@PriceCode", order.PriceCode.Id));
                     cmd.Parameters.Add(new OleDbParameter("@CustomerCode", order.CustomerCode.Id));
                     cmd.Parameters.Add(new OleDbParameter("@DateOfTreatment", DateTime.Parse(order.DateOfTreatment.ToString()).Date));
@@ -112,8 +119,8 @@ namespace ViewModel
         protected override void CreateUpdateSQL(BaseEntity entity, OleDbCommand cmd)
         {
             Order order = entity as Order;
-            cmd.CommandText = $"UPDATE OrderTBL SET priceCode=@PriceCode, customerCode=@CustomerCode, employeeCode=@EmployeeCode, dateOfTreatment=@DateOfTreatment, carReady=@CarReady, dateOfOrder=@DateOfOrder WHERE id = @Id";
-            //cmd.CommandText = "INSERT INTO OrderTBL (priceCode, customerCode, employeeCode, dateOfTreatment, carReady, dateOfOrder) VALUES (@PriceCode, @CustomerCode, @EmployeeCode, @DateOfTreatment, @CarReady, @DateOfOrder)";
+            cmd.CommandText = $"UPDATE OrderTBL SET priceCode=@PriceCode, customerCode=@CustomerCode, employeeCode=@EmployeeCode," +
+                $" dateOfTreatment=@DateOfTreatment, carReady=@CarReady, dateOfOrder=@DateOfOrder WHERE id = @Id";
             cmd.Parameters.Add(new OleDbParameter("@PriceCode", order.PriceCode.Id));
             cmd.Parameters.Add(new OleDbParameter("@CustomerCode", order.CustomerCode.Id));
             cmd.Parameters.Add(new OleDbParameter("@EmployeeCode", order.EmployeeCode.Id));
@@ -132,6 +139,7 @@ namespace ViewModel
         #endregion
 
         #region Insert Update Delete - Functions
+        //שלושת הפעולות מוסיפות, מעדכנות ומוחקות רשומות מהטבלה במסד הנתונים
         public override void Insert(BaseEntity entity)
         {
             Order reqEntity = entity as Order;

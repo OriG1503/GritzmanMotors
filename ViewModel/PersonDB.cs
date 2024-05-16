@@ -19,6 +19,10 @@ namespace ViewModel
         #endregion
 
         #region New Entity
+        //הפעולה מחזירה איבר חדש מסוג
+        //Person
+        //בתור ישות מסוג
+        //BaseEntity
         protected override BaseEntity NewEntity()
         {
             return new Person() as BaseEntity;
@@ -26,6 +30,9 @@ namespace ViewModel
         #endregion
 
         #region Create Model
+        //הפעולה יוצרת עצם מסוג
+        //Person
+        //מתוך תוצאת שאילתת השליפה/בחירה ממסד הנתונים
         protected override async Task<BaseEntity> CreateModel(BaseEntity entity)
         {
             Person person = entity as Person;
@@ -39,6 +46,8 @@ namespace ViewModel
         #endregion
 
         #region Select All
+        //הפעולה שולפת את כל הרשומות מהטבלה
+        //שנמצאת במסד הנתונים PersonTBL 
         public async Task<PersonList> SelectAll()
         {
             command.CommandText = "SELECT * FROM PersonTBL";
@@ -48,6 +57,8 @@ namespace ViewModel
         #endregion
 
         #region Select By Id
+        //הפעולה מבצעת שאילתת שליפה לרשומה מסוימת מהטבלה לפי ה
+        //id
         public async static Task<Person> SelectById(int id)
         {
             if (list.Count == 0)
@@ -62,6 +73,7 @@ namespace ViewModel
         #endregion
 
         #region Create [Insert/Update/Delete] SQL
+        //שלושת הפעולות יוצרות את הפקודות המתאימות להוספה, עדכון ומחיקה של רשומות מהטבלה במסד הנתונים
         protected override void CreateInsertSQL(BaseEntity entity, OleDbCommand cmd)
         {
             Person person = entity as Person;
@@ -95,6 +107,7 @@ namespace ViewModel
         #endregion
 
         #region Insert Update Delete - Functions
+        //שלושת הפעולות מוסיפות, מעדכנות ומוחקות רשומות מהטבלה במסד הנתונים
         public override void Insert(BaseEntity entity)
         {
             Person person = entity as Person;

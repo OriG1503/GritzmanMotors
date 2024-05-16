@@ -29,5 +29,7 @@ namespace ViewModel
         #endregion
 
     }
+    //משתנה המסוג delegate בשם CreateSql מייצג פונקציה שמקבלת פרמטרים מסוג BaseEntity ו־OleDbCommand ואין לה ערך מוחזר
+    //פונקציה זו משמשת ליצירת שאילתות SQL בהתאם לפעולת ההכנסה, העדכון או המחיקה שנדרשת לביצוע על ידי פעולות השמירה במחלקת BaseDB.
     public delegate void CreateSql(BaseEntity entity, OleDbCommand command);
 }

@@ -10,7 +10,6 @@ namespace Host.Controllers
     [ApiController]
     public class EmployeeController : ControllerBase
     {
-    
         #region Employee Controller
         [HttpGet]
         [ActionName("SelectAllEmployees")]
@@ -52,6 +51,5 @@ namespace Host.Controllers
             return x;
         }
         #endregion
-
     }
 }

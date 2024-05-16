@@ -19,6 +19,10 @@ namespace ViewModel
         #endregion
 
         #region New Entity
+        //הפעולה מחזירה איבר חדש מסוג
+        //Pricing
+        //בתור ישות מסוג
+        //BaseEntity
         protected override BaseEntity NewEntity()
         {
             return new Pricing() as BaseEntity;
@@ -26,6 +30,9 @@ namespace ViewModel
         #endregion
 
         #region Create Model
+        //הפעולה יוצרת עצם מסוג
+        //Pricing
+        //מתוך תוצאת שאילתת השליפה/בחירה ממסד הנתונים
         protected override async Task<BaseEntity> CreateModel(BaseEntity entity)
         {
             Pricing pricing = entity as Pricing;
@@ -40,15 +47,20 @@ namespace ViewModel
         #endregion
 
         #region Select All
+        //הפעולה שולפת את כל הרשומות מהטבלה
+        //שנמצאת במסד הנתונים PricingTBL
         public async Task<PricingList> SelectAll()
         {
-            command.CommandText = "SELECT PricingTBL.id, PricingTBL.modelCode, PricingTBL.price, CarModelTBL.companyCode FROM CarModelTBL INNER JOIN PricingTBL ON CarModelTBL.id = PricingTBL.modelCode;";
+            command.CommandText = "SELECT PricingTBL.id, PricingTBL.modelCode, PricingTBL.price, " +
+                "CarModelTBL.companyCode FROM CarModelTBL INNER JOIN PricingTBL ON CarModelTBL.id = PricingTBL.modelCode;";
             list = new PricingList(await Select());
             return list;
         }
         #endregion
 
         #region Select By Id
+        //הפעולה מבצעת שאילתת שליפה לרשומה מסוימת מהטבלה לפי ה
+        //id
         public async static Task<Pricing> SelectById(int id)
         {
             if (list.Count == 0)
@@ -63,6 +75,8 @@ namespace ViewModel
         #endregion
 
         #region Create [Insert/Update/Delete] SQL
+        //שלושת הפעולות יוצרות את הפקודות המתאימות להוספה, עדכון ומחיקה של רשומות מהטבלה במסד הנתונים
+
         protected override void CreateInsertSQL(BaseEntity entity, OleDbCommand cmd)
         {
             Pricing pricing = entity as Pricing;
@@ -72,8 +86,6 @@ namespace ViewModel
                 cmd.CommandText = "INSERT INTO PricingTBL (modelCode, price) VALUES (@ModelCode, @Price)";
                 cmd.Parameters.Add(new OleDbParameter("@ModelCode", pricing.ModelCode.Id));
                 cmd.Parameters.Add(new OleDbParameter("@Price", pricing.Price));
-                //cmd.CommandText =$"INSERT INTO PricingTBL (modelCode, price) VALUES ({pricing.ModelCode.Id}, {pricing.Price})";
-
             }
         }
 
@@ -95,6 +107,7 @@ namespace ViewModel
         #endregion
 
         #region Insert Update Delete - Functions
+        //שלושת הפעולות מוסיפות, מעדכנות ומוחקות רשומות מהטבלה במסד הנתונים
         public override void Insert(BaseEntity entity)
         {
             Pricing reqEntity = entity as Pricing;

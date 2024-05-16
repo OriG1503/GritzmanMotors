@@ -19,6 +19,10 @@ namespace ViewModel
         #endregion
 
         #region New Entity
+        //הפעולה מחזירה איבר חדש מסוג
+        //Specialization
+        //בתור ישות מסוג
+        //BaseEntity
         protected override BaseEntity NewEntity()
         {
             return new Specialization() as BaseEntity;
@@ -26,6 +30,9 @@ namespace ViewModel
         #endregion
 
         #region Create Model
+        //הפעולה יוצרת עצם מסוג
+        //Specialization
+        //מתוך תוצאת שאילתת השליפה/בחירה ממסד הנתונים
         protected override async Task<BaseEntity> CreateModel(BaseEntity entity)
         {
             Specialization specialization = entity as Specialization;
@@ -36,6 +43,8 @@ namespace ViewModel
         #endregion
 
         #region Select All
+        //הפעולה שולפת את כל הרשומות מהטבלה
+        //שנמצאת במסד הנתונים SpecializationTBL 
         public async Task<SpecializationList> SelectAll()
         {
             command.CommandText = "SELECT * FROM SpecializationTBL";
@@ -45,6 +54,8 @@ namespace ViewModel
         #endregion
 
         #region Select By Id
+        //הפעולה מבצעת שאילתת שליפה לרשומה מסוימת מהטבלה לפי ה
+        //id
         public async static Task<Specialization> SelectById(int id)
         {
             if (list.Count == 0)
@@ -59,6 +70,8 @@ namespace ViewModel
         #endregion
 
         #region Create [Insert/Update/Delete] SQL
+        //שלושת הפעולות יוצרות את הפקודות המתאימות להוספה, עדכון ומחיקה של רשומות מהטבלה במסד הנתונים
+
         protected override void CreateInsertSQL(BaseEntity entity, OleDbCommand cmd)
         {
             Specialization specialization = entity as Specialization;
@@ -89,6 +102,7 @@ namespace ViewModel
         #endregion
 
         #region Insert Update Delete - Functions
+        //שלושת הפעולות מוסיפות, מעדכנות ומוחקות רשומות מהטבלה במסד הנתונים
         public override void Insert(BaseEntity entity)
         {
             Specialization specialization = entity as Specialization;

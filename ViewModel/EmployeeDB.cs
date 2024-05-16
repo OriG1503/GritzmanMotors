@@ -19,6 +19,10 @@ namespace ViewModel
         #endregion
 
         #region New Entity
+        //הפעולה מחזירה איבר חדש מסוג
+        //Employee
+        //בתור ישות מסוג
+        //BaseEntity
         protected override BaseEntity NewEntity()
         {
             return new Employee() as BaseEntity;
@@ -26,6 +30,9 @@ namespace ViewModel
         #endregion
 
         #region Create Model
+        //הפעולה יוצרת עצם מסוג
+        //Employee
+        //מתוך תוצאת שאילתת השליפה/בחירה ממסד הנתונים
         protected override async Task<BaseEntity> CreateModel(BaseEntity entity)
         {
             Employee employee = entity as Employee;
@@ -38,15 +45,20 @@ namespace ViewModel
         #endregion
 
         #region Select All
+        //הפעולה שולפת את כל הרשומות מהטבלה
+        //שנמצאת במסד הנתונים EmployeeTBL 
         public async Task<EmployeeList> SelectAll()
         {
-            command.CommandText = "SELECT PersonTBL.id, PersonTBL.firstName, PersonTBL.lastName, PersonTBL.dateOfBirth, EmployeeTBL.specializationCode FROM PersonTBL INNER JOIN EmployeeTBL ON PersonTBL.id = EmployeeTBL.id;";
+            command.CommandText = "SELECT PersonTBL.id, PersonTBL.firstName, PersonTBL.lastName, PersonTBL.dateOfBirth," +
+                " EmployeeTBL.specializationCode FROM PersonTBL INNER JOIN EmployeeTBL ON PersonTBL.id = EmployeeTBL.id;";
             list = new EmployeeList(await base.Select());
             return list;
         }
         #endregion
 
         #region Select By Id
+        //הפעולה מבצעת שאילתת שליפה לרשומה מסוימת מהטבלה לפי ה
+        //id
         public async static Task<Employee> SelectById(int id)
         {
             if (list.Count == 0)
@@ -60,8 +72,8 @@ namespace ViewModel
         }
         #endregion
 
-        //אני חושב שיש טעויות בריג'יון שלמטה
         #region Create [Insert/Update/Delete] SQL
+        //שלושת הפעולות יוצרות את הפקודות המתאימות להוספה, עדכון ומחיקה של רשומות מהטבלה במסד הנתונים
         protected override void CreateInsertSQL(BaseEntity entity, OleDbCommand cmd)
         {
             Employee employee = entity as Employee;
@@ -92,6 +104,7 @@ namespace ViewModel
         #endregion
 
         #region Insert Update Delete - Functions
+        //שלושת הפעולות מוסיפות, מעדכנות ומוחקות רשומות מהטבלה במסד הנתונים
         public override void Insert(BaseEntity entity)
         {
             Employee reqEntity = entity as Employee;

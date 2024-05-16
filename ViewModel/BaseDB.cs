@@ -6,19 +6,23 @@ namespace ViewModel
     public abstract class BaseDB
     {
         #region OleDb Types - Class Types 
-        //כתובת בבית
-        //protected static string connectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Users\Ori.G\Desktop\Ori's School\כיתה יב\הנדסת תוכנה\GritzmanMotorsVS\ViewModel\GritzmanMotorsDB.accdb";
-
-        // כתובת בבית ספר
-        //protected static string connectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=D:\אורי גריצמן\GritzmanMotorsVS\ViewModel\GritzmanMotorsDB.accdb";
-
+        //כתובת התחברות למסד נתונים
         private string connectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source="+Path.GetFullPath(System.Reflection.Assembly.GetExecutingAssembly().Location+ "/../../../../../../../GritzmanMotorsVS/ViewModel/GritzmanMotorsDB.accdb");
+
+        //משתנה המייצג חיבור למסד הנתונים. זהו החיבור שישמש לבצע פעולות שונות במסד הנתונים
         protected static OleDbConnection connection;
+
+        //משתנה המייצג פקודת אס-קיו-אל שתשלח למסד הנתונים, היא יכולה להיות פקודת הכנסה, עדכון, מחיקה או שאילתת בחירה
         protected OleDbCommand command;
+
+        //משתנה המייצג את תוצאות השאילתא שנשלחה
         protected OleDbDataReader reader;
         #endregion
 
         #region Constructor
+
+        //אנו מאתחלים את החיבור למסד הנתונים והפקודה שמשמשים לתקשורת עם המסד
+        //זאת על מנת להבטיח קיום חיבור פתוח ומוכן לשימוש בכל פעם שנרצה לבצע פעולות במסד הנתונים
         public BaseDB()
         {
             connection ??= new OleDbConnection(connectionString);
@@ -28,22 +32,28 @@ namespace ViewModel
         #endregion
 
         #region Inserted Updated Deleted
+        //אנו משתמשים ברשימות סטטיות כדי לעקוב אחר הרשומות שהוספו, שעודכנו או שנמחקו ממסד הנתונים
+        //הרשימות האלו הן רשימות של כל הפעולות שאמורות להתבצע בכל אחת מהפעולות
         public static List<ChangeEntity> inserted = new List<ChangeEntity>();
         public static List<ChangeEntity> updated = new List<ChangeEntity>();
         public static List<ChangeEntity> deleted = new List<ChangeEntity>();
         #endregion
 
         #region Create [Insert/Update/Delete] SQL
+        // פעולות אבסטרקטיות שמייצגות יצירת שאילתות הוספה, עדכון ומחיקה של רשומות במסד הנתונים
         protected abstract void CreateInsertSQL(BaseEntity entity, OleDbCommand cmd);
         protected abstract void CreateUpdateSQL(BaseEntity entity, OleDbCommand cmd);
         protected abstract void CreateDeletedSQL(BaseEntity entity, OleDbCommand cmd);
         #endregion
 
         #region New Entity
+        //פעולה אבסטרקטית שמטרתה ליצור ישות חדשה מסוג BaseEntity
         protected abstract BaseEntity NewEntity();
         #endregion
 
         #region Create Model
+        // פעולה זו מקבלת ישות מסוימת ומעדכנת את המזהה שלה בהתאם לערך
+        // שנמצא בקריאה האחרונה מהמסד נתונים, ולבסוף מחזירה את הישות עם המזהה המעודכן
         protected virtual async Task<BaseEntity> CreateModel(BaseEntity entity)
         {
             entity.Id = (int)reader["id"];
@@ -52,6 +62,8 @@ namespace ViewModel
         #endregion
 
         #region Insert Update Delete - Functions
+        //כל פונקציה בודקת אם הישות המועברת תואמת את סוג הישות המצויין עבור המחלקה המתאימה
+        //אם כן, הישות מתווספת לרשימה המתאימה להוספה, עדכון או מחיקה.
         public virtual void Insert(BaseEntity entity)
         {
             BaseEntity reqEntity = this.NewEntity();
@@ -81,20 +93,17 @@ namespace ViewModel
         #endregion
 
         #region Select - Function
+        //זוהי פעולה המבצעת פעולת בחירה ממסד הנתונים. היא מחזירה רשימה של ישויות מסוג
+        //BaseEntity
+        //מתוך התוצאות שנשלפו מהמסד
         protected async Task<List<BaseEntity>> Select()
         {
             List<BaseEntity> list = new List<BaseEntity>();
 
             try
             {
-                //command.Connection = connection; 
-                //connection.Close();
-                //connection.Open();
-
                 if(connection.State != ConnectionState.Open)
-                {
                     connection.Open();
-                }
 
                 this.reader = (OleDbDataReader)await command.ExecuteReaderAsync();
 
@@ -112,9 +121,6 @@ namespace ViewModel
             {
                 if (reader != null)
                     reader.Close();
-
-                //if (connection.State == System.Data.ConnectionState.Open)
-                //    connection.Close();
             }
 
             return list;
@@ -122,18 +128,15 @@ namespace ViewModel
         #endregion
 
         #region Save Changes - Function
+        //פונקציה זו שומרת את השינויים במסד הנתונים על פי הרשימות של הישויות
+        // שהוכנסו, עודכנו או נמחקו. היא מחזירה את מספר הרשומות ששונו בהצלחה
         public async Task<int> SaveChanges()
         {
             int records_affected = 0;
             try
             {
-                //command.Connection = this.connection;
-                //this.connection.Open();
-
                 if(connection.State != ConnectionState.Open )
-                {
                     connection.Open();
-                }
 
                 foreach (var item in inserted)
                 {
@@ -144,8 +147,6 @@ namespace ViewModel
                     command.CommandText = "Select @@Identity";
                     var y =await command.ExecuteScalarAsync();
                     int x = (int)y;
-                    //var x = (int)y.Result;
-
                     item.Entity.Id = x;
                 }
 
@@ -174,11 +175,7 @@ namespace ViewModel
                 deleted.Clear();
 
                 if(reader != null)
-                {
                     reader.Close();
-                }
-
-                //if (connection.State == System.Data.ConnectionState.Open) connection.Close();
             }
 
             return records_affected;

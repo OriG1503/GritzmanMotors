@@ -20,6 +20,10 @@ namespace ViewModel
         #endregion
 
         #region New Entity
+        //הפעולה מחזירה איבר חדש מסוג
+        //Customer
+        //בתור ישות מסוג
+        //BaseEntity
         protected override BaseEntity NewEntity()
         {
             return new Customer() as BaseEntity;
@@ -27,6 +31,9 @@ namespace ViewModel
         #endregion
 
         #region Create Model
+        //הפעולה יוצרת עצם מסוג
+        //Customer
+        //מתוך תוצאת שאילתת השליפה/בחירה ממסד הנתונים
         protected override async Task<BaseEntity> CreateModel(BaseEntity entity)
         {
             Customer customer = entity as Customer;
@@ -38,15 +45,20 @@ namespace ViewModel
         #endregion
 
         #region Select All
+        //הפעולה שולפת את כל הרשומות מהטבלה
+        //שנמצאת במסד הנתונים CustomerTBL 
         public async Task<CustomerList> SelectAll()
         {
-            command.CommandText = "SELECT CustomerTBL.id, CustomerTBL.phoneNumber, PersonTBL.firstName, PersonTBL.lastName, PersonTBL.dateOfBirth FROM PersonTBL INNER JOIN CustomerTBL ON PersonTBL.id = CustomerTBL.id;";
+            command.CommandText = "SELECT CustomerTBL.id, CustomerTBL.phoneNumber, PersonTBL.firstName, PersonTBL.lastName" +
+                ", PersonTBL.dateOfBirth FROM PersonTBL INNER JOIN CustomerTBL ON PersonTBL.id = CustomerTBL.id;";
             list = new CustomerList(await base.Select());
             return list;
         }
         #endregion
 
         #region Select By Id
+        //הפעולה מבצעת שאילתת שליפה לרשומה מסוימת מהטבלה לפי ה
+        //id
         public async static Task<Customer> SelectById(int id)
         {
             if (list.Count == 0)
@@ -60,8 +72,8 @@ namespace ViewModel
         }
         #endregion
 
-        //אני חושב שיש טעויות בריג'יון שלמטה
         #region Create [Insert/Update/Delete] SQL
+        //שלושת הפעולות יוצרות את הפקודות המתאימות להוספה, עדכון ומחיקה של רשומות מהטבלה במסד הנתונים
         protected override void CreateInsertSQL(BaseEntity entity, OleDbCommand cmd)
         {
             Customer customer = entity as Customer;
@@ -92,6 +104,8 @@ namespace ViewModel
         #endregion
 
         #region Insert Update Delete - Functions
+        //שלושת הפעולות מוסיפות, מעדכנות ומוחקות רשומות מהטבלה במסד הנתונים
+
         public override void Insert(BaseEntity entity)
         {
             Customer reqEntity = entity as Customer;
